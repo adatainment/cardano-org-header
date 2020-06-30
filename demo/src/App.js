@@ -31,17 +31,19 @@ class App extends Component {
   render () {
     if (this.enabled) {
       return (
-        <Medusa
-          theme='dark'
-          className='medusa-container'
-          camPosZ={600}
-          colorPalette={[
-            '#ff5454',
-            '#3b7882',
-            '#0033ad',
-            '#ffffff'
-          ]}
-        />
+        <div>
+          <Medusa
+            ariaLabel='Directory Structure for the ouroboros-network git repository'
+            theme='dark'
+            className='medusa-container'
+            camPosZ={600}
+            colorPalette={[
+              '#ff5454',
+              '#3b7882',
+              '#ffffff'
+            ]}
+          />
+        </div>
       )
     }
   }
