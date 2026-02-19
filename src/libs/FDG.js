@@ -81,13 +81,13 @@ export default class FDG {
 
     this.tl.to(this.config.FDG, {
       sphereRadius: 210,
-      duration: 3.5
+      duration: 2.5
     })
 
     this.tl.to(this.config.FDG, {
       sphereRadius: 500,
       duration: 4.3,
-      ease: 'back.out(1.7)',
+      ease: 'back.out(1.2)',
       focusPlaneOffset: 150
     })
   }
