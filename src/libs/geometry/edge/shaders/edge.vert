@@ -43,7 +43,7 @@ void main() {
     vMvPosition = mvPosition;
 
     // vAlpha = 2000.0 / dot(mvPosition.xyz, mvPosition.xyz);
-    vAlpha = 0.18;
+    vAlpha = 0.22;
 
     float dofAmount = clamp(map(camDistToCenter, 0., 800., 0., 1.), 0., 1.);
 

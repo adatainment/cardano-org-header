@@ -33,7 +33,7 @@ export default class NodeGeometry {
     this.material = null
     this.pickingMaterial = null
     this.geometry = null
-    this.baseScale = 15000
+    this.baseScale = 17000
     this.lastHoveredID = -1
 
     for (let index = 0; index < this.config.FDG.colorPalette.length; index++) {

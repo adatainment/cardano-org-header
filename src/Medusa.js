@@ -760,14 +760,14 @@ class Medusa extends mixin(EventEmitter, Component) {
       this.composerMerge.addPass(this.rttPassBack)
       this.composerMerge.addPass(this.rttPassFront)
 
-      this.afterimagePass = new AfterimagePass(0.83)
+      this.afterimagePass = new AfterimagePass(0.80)
       this.composerMerge.addPass(this.afterimagePass)
     } else {
       this.composer = new EffectComposer(this.renderer)
 
       this.composer.addPass(this.renderPass)
 
-      this.afterimagePass = new AfterimagePass(0.83)
+      this.afterimagePass = new AfterimagePass(0.80)
       this.composer.addPass(this.afterimagePass)
     }
   }
@@ -1037,7 +1037,12 @@ class Medusa extends mixin(EventEmitter, Component) {
    * Set up camera with defaults
    */
   initCamera () {
-    this.camera = new PerspectiveCamera(this.config.camera.fov, window.innerWidth / window.innerHeight, 10, 3000)
+    const containerEl = this.containerRef.current
+    const parentEl = containerEl ? containerEl.parentElement : null
+    const w = parentEl ? parentEl.clientWidth : window.innerWidth
+    const h = parentEl ? parentEl.clientHeight : window.innerHeight
+    const aspect = w / h
+    this.camera = new PerspectiveCamera(this.config.camera.fov, aspect, 10, 3000)
     this.camera.position.x = this.config.camera.initPos.x
     this.camera.position.y = this.config.camera.initPos.y
     this.camera.position.z = this.config.camera.initPos.z
@@ -1076,16 +1081,19 @@ class Medusa extends mixin(EventEmitter, Component) {
    */
   resize () {
     this.containerEl = this.containerRef.current
+    const parentEl = this.containerEl.parentElement
 
-    this.width = this.containerEl.offsetWidth
-    this.height = this.containerEl.offsetHeight
+    // Use parent element dimensions as source of truth
+    // (parent is sized by host page CSS, e.g. #medusa-root on cardano.org)
+    this.width = parentEl ? parentEl.clientWidth : this.containerEl.offsetWidth
+    this.height = parentEl ? parentEl.clientHeight : this.containerEl.offsetHeight
 
     this.config.scene.width = this.width
     this.config.scene.height = this.height
 
     this.camera.aspect = this.width / this.height
     this.camera.updateProjectionMatrix()
-    this.renderer.setSize(this.width, this.height, false)
+    this.renderer.setSize(this.width, this.height)
 
     if (this.composerBack) {
       this.composerBack.setSize(this.width, this.height)
