@@ -855,11 +855,19 @@ class Medusa extends mixin(EventEmitter, Component) {
       }
     }
 
-    // if (this.config.scene.autoRotate) {
-    //   this.scene.rotation.y += this.config.scene.autoRotateSpeed
-    // }
+    // Organic drift: slow, varying nudges via layered sine waves
+    // Fades out over ~2 minutes, then only subtle constant rotation remains
+    if (this.controls.rotateLeft) {
+      if (!this._driftStart) this._driftStart = performance.now()
+      const t = performance.now() * 0.001
+      const elapsed = (performance.now() - this._driftStart) * 0.001
+      const fade = Math.max(0, 1 - elapsed / 120)
 
-    // this.cameraFollowTarget()
+      const driftH = Math.sin(t * 0.13) * 0.0008 + Math.sin(t * 0.07) * 0.0005
+      const driftV = Math.sin(t * 0.09) * 0.0003 + Math.cos(t * 0.05) * 0.0002
+      this.controls.rotateLeft(driftH * fade + 0.00008)
+      this.controls.rotateUp(driftV * fade)
+    }
 
     this.controls.update()
 
