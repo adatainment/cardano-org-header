@@ -1055,6 +1055,11 @@ class Medusa extends mixin(EventEmitter, Component) {
     this.camera.position.y = this.config.camera.initPos.y
     this.camera.position.z = this.config.camera.initPos.z
 
+    // Move camera closer on portrait/mobile viewports
+    if (h > w) {
+      this.camera.position.z = this.config.camera.initPos.z * 0.55
+    }
+
     // set target positions
     this.cameraPos = this.camera.position.clone() // current camera position
     this.targetCameraPos = this.cameraPos.clone() // target camera position
