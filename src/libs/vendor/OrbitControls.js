@@ -300,6 +300,10 @@ var OrbitControls = function (object, domElement) {
     sphericalDelta.phi -= angle
   }
 
+  // Public access for external nudges
+  this.rotateLeft = rotateLeft
+  this.rotateUp = rotateUp
+
   var panLeft = (function () {
     var v = new Vector3()
 

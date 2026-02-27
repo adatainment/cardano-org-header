@@ -21,9 +21,9 @@ void main(){
     float a = vAlpha;
     float distToCenter = length(vCurrentPosition.xyz);
     if (uBokeh == 1.0) {
-      a *= pow(distToCenter, 2.0) * 0.000009;
+      a *= pow(distToCenter, 2.0) * 0.0000022;
     } else {
-      a *= pow(distToCenter, 2.0) * 0.0000048;
+      a *= pow(distToCenter, 2.0) * 0.0000012;
     }
     a *= (15000.0 / length(vMvPosition.xyz)) * 0.06;
 

@@ -25,23 +25,52 @@ class App extends Component {
       return false
     }
 
+    const gl = glContext.getSupportedExtensions()
+
+    if (gl.indexOf('ANGLE_instanced_arrays') === -1) {
+      console.log('ANGLE_instanced_arrays support is required to run this app')
+      return false
+    }
+
+    if (gl.indexOf('OES_texture_float') === -1) {
+      console.log('OES_texture_float support is required to run this app')
+      return false
+    }
+
+    if (gl.indexOf('OES_texture_float_linear') === -1) {
+      console.log('OES_texture_float support is required to run this app')
+      return false
+    }
+
+    if (gl.indexOf('OES_texture_half_float') === -1) {
+      console.log('OES_texture_float support is required to run this app')
+      return false
+    }
+
+    if (gl.indexOf('OES_texture_half_float_linear') === -1) {
+      console.log('OES_texture_float support is required to run this app')
+      return false
+    }
+
     return true
   }
 
   render () {
     if (this.enabled) {
       return (
-        <Medusa
-          theme='dark'
-          className='medusa-container'
-          camPosZ={600}
-          colorPalette={[
-            '#ff5454',
-            '#3b7882',
-            '#0033ad',
-            '#ffffff'
-          ]}
-        />
+        <div>
+          <Medusa
+            ariaLabel='Directory Structure for the ouroboros-network git repository'
+            theme='dark'
+            className='medusa-container'
+            camPosZ={600}
+            colorPalette={[
+              '#ff5454',
+              '#3b7882',
+              '#ffffff'
+            ]}
+          />
+        </div>
       )
     }
   }

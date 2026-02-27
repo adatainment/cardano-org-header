@@ -855,11 +855,19 @@ class Medusa extends mixin(EventEmitter, Component) {
       }
     }
 
-    // if (this.config.scene.autoRotate) {
-    //   this.scene.rotation.y += this.config.scene.autoRotateSpeed
-    // }
+    // Organic drift: slow, varying nudges via layered sine waves
+    // Fades out over ~2 minutes, then only subtle constant rotation remains
+    if (this.controls.rotateLeft) {
+      if (!this._driftStart) this._driftStart = performance.now()
+      const t = performance.now() * 0.001
+      const elapsed = (performance.now() - this._driftStart) * 0.001
+      const fade = Math.max(0, 1 - elapsed / 120)
 
-    // this.cameraFollowTarget()
+      const driftH = Math.sin(t * 0.13) * 0.0008 + Math.sin(t * 0.07) * 0.0005
+      const driftV = Math.sin(t * 0.09) * 0.0003 + Math.cos(t * 0.05) * 0.0002
+      this.controls.rotateLeft(driftH * fade + 0.00008)
+      this.controls.rotateUp(driftV * fade)
+    }
 
     this.controls.update()
 
@@ -1046,6 +1054,11 @@ class Medusa extends mixin(EventEmitter, Component) {
     this.camera.position.x = this.config.camera.initPos.x
     this.camera.position.y = this.config.camera.initPos.y
     this.camera.position.z = this.config.camera.initPos.z
+
+    // Move camera closer on portrait/mobile viewports
+    if (h > w) {
+      this.camera.position.z = this.config.camera.initPos.z * 0.55
+    }
 
     // set target positions
     this.cameraPos = this.camera.position.clone() // current camera position
@@ -1862,13 +1875,14 @@ class Medusa extends mixin(EventEmitter, Component) {
           config={this.config}
         /> */}
         {/* {this.UI()} */}
-        <canvas width={this.config.scene.width} height={this.config.scene.height} id={this.config.scene.canvasID} />
+        <canvas role='img' aria-label={this.props.ariaLabel} width={this.config.scene.width} height={this.config.scene.height} id={this.config.scene.canvasID} />
       </div>
     )
   }
 }
 
 Medusa.propTypes = {
+  ariaLabel: PropTypes.string,
   className: PropTypes.string,
   colorPalette: PropTypes.array,
   theme: PropTypes.string,
