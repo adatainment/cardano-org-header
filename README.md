@@ -1,4 +1,4 @@
-# Medusa
+# cardano-org Header
 
 3D WebGL force-directed graph visualization built with React and Three.js. Renders a GitHub repository's file tree as an animated, GPU-computed physics simulation. Used as the homepage hero header on [cardano.org](https://cardano.org).
 
@@ -67,3 +67,4 @@ The cardano-org `WelcomeHero` component loads the bundle via `<script>` tag into
 - **`demo/src/App.js`** — Entry point for the deployed bundle. Configures props passed to the Medusa component.
 
 GPU hardware is classified into tiers (via `detect-gpu`) that control node count and post-processing quality.
+
